@@ -3,7 +3,6 @@ PROGRAM Encryption(INPUT, OUTPUT);
   и печатает новые символы в OUTPUT}
 CONST
   Len = 20;
-  Alphabet = ['A'..'Z', ' '];
 TYPE
   Str = ARRAY [1 .. Len] OF 'A' .. 'Z';
   Chiper = ARRAY [' ' .. 'Z'] OF CHAR;
@@ -43,7 +42,7 @@ BEGIN {Initialize}
   Code['X'] := 'C';
   Code['Y'] := 'B';
   Code['Z'] := 'A';
-  Code[' '] := '%';
+  Code[' '] := '8';
 END;  {Initialize}
  
 PROCEDURE Encode(VAR Msg: Str; VAR Code: Chiper; I: Long);
@@ -52,7 +51,7 @@ VAR
 BEGIN {Encode}
   FOR Index := 1 TO I
   DO
-    IF Msg[Index] IN Alphabet 
+    IF Msg[Index] IN ['A'..'Z', ' '] 
     THEN
       WRITE(Code[Msg[Index]])
     ELSE
