@@ -3,14 +3,16 @@ PROGRAM Encryption(INPUT, OUTPUT);
   и печатает новые символы в OUTPUT}
 CONST
   Len = 20;
+  Alphabet = ['A'..'Z', ' '];
 TYPE
   Str = ARRAY [1 .. Len] OF 'A' .. 'Z';
-  Chiper = ARRAY ['A' .. 'Z'] OF CHAR;
+  Chiper = ARRAY [' ' .. 'Z'] OF CHAR;
+  Long = 0..Len;
 VAR
   Msg: Str;
   Code: Chiper;
-  I: INTEGER;
-  Long: 0..Len;
+  I: Long;
+
  
 PROCEDURE Initialize(VAR Code: Chiper);
 {Присвоить Code шифр замены}
@@ -41,16 +43,16 @@ BEGIN {Initialize}
   Code['X'] := 'C';
   Code['Y'] := 'B';
   Code['Z'] := 'A';
+  Code[' '] := '%';
 END;  {Initialize}
  
-PROCEDURE Encode(VAR S: Str);
-{Выводит символы из Code, соответствующие символам из S}
+PROCEDURE Encode(VAR Msg: Str; VAR Code: Chiper; I: Long);
 VAR
   Index: 1 .. Len;
 BEGIN {Encode}
-  FOR Index := 1 TO Long
+  FOR Index := 1 TO I
   DO
-    IF Msg[Index] IN ['A' .. 'Z']
+    IF Msg[Index] IN Alphabet 
     THEN
       WRITE(Code[Msg[Index]])
     ELSE
@@ -65,21 +67,19 @@ BEGIN {Encryption}
   DO
     BEGIN
       {читать строку в Msg и распечатать ее}
-      Long :=0;
       I := 0;
       WHILE NOT EOLN AND (I < Len)
       DO
         BEGIN
           I := I + 1;
-          Long := I;
-          READ(Msg[I])
+          READ(Msg[I]);
+          WRITE(Msg[I])
         END;
       READLN;
       WRITELN;
       {дополнить Msg пробелами}
       {распечатать кодированное сообщение}
-      Encode(Msg);
-      WRITELN('Длина строки: ', Long)
+      Encode(Msg, Code, I);
     END
 END.  {Encryption}
 
